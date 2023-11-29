@@ -2,36 +2,83 @@
 const reponse = await fetch("pieces-autos.json");
 const pieces = await reponse.json();
 
-// Création des balises
-const article = pieces[0];
+for (let i = 0; i < pieces.length; i++) {
+  const article = pieces[i];
 
-const imageElement = document.createElement("img");
-imageElement.src = article.image;
+  // Récupération de l'élément du DOM qui accueillera les fiches
+  const sectionFiches = document.querySelector(".fiches");
+  // Création d’une balise dédiée à une pièce automobile
+  const pieceElement = document.createElement("article");
 
-const nomElement = document.createElement("h2");
-nomElement.innerText = article.nom;
+  // Création des balises
+  const imageElement = document.createElement("img");
+  imageElement.src = article.image;
 
-const prixElement = document.createElement("p");
-prixElement.innerText = `Prix: ${article.prix} € (${
-  article.prix < 35 ? "€" : "€€€"
-})`;
+  const nomElement = document.createElement("h2");
+  nomElement.innerText = article.nom;
 
-const categorieElement = document.createElement("p");
-categorieElement.innerText = article.categorie ?? "(aucune catégorie)";
+  const prixElement = document.createElement("p");
+  prixElement.innerText = `Prix: ${article.prix} € (${
+    article.prix < 35 ? "€" : "€€€"
+  })`;
 
-const descriptionElement = document.createElement("p");
-descriptionElement.innerText =
-  article.description ?? "(Pas de description pour le moment.)";
+  const categorieElement = document.createElement("p");
+  categorieElement.innerText = article.categorie ?? "(aucune catégorie)";
 
-const nombreElement = document.createElement("p");
-nombreElement.innerText =
-  article.disponibilite === true ? "En stock" : "Rupture de stock";
+  const descriptionElement = document.createElement("p");
+  descriptionElement.innerText =
+    article.description ?? "(Pas de description pour le moment.)";
 
-//Rattachement de nos balises au DOM
-const sectionFiches = document.querySelector(".fiches");
-sectionFiches.appendChild(imageElement);
-sectionFiches.appendChild(nomElement);
-sectionFiches.appendChild(prixElement);
-sectionFiches.appendChild(categorieElement);
-sectionFiches.appendChild(descriptionElement);
-sectionFiches.appendChild(nombreElement);
+  const nombreElement = document.createElement("p");
+  nombreElement.innerText =
+    article.disponibilite === true ? "En stock" : "Rupture de stock";
+
+  // On rattache la balise article a la section Fiches
+  sectionFiches.appendChild(pieceElement);
+  // On rattache l’image à pieceElement (la balise article)
+  pieceElement.appendChild(imageElement);
+  pieceElement.appendChild(nomElement);
+  pieceElement.appendChild(prixElement);
+  pieceElement.appendChild(categorieElement);
+  //Ajout des éléments au DOM pour l'exercice
+  pieceElement.appendChild(descriptionElement);
+  pieceElement.appendChild(nombreElement);
+}
+
+//Bouton filtrer prix croissant
+const boutonTrier = document.querySelector(".btn-trier");
+boutonTrier.addEventListener("click", function () {
+  const piecesOrdonnees = Array.from(pieces);
+  piecesOrdonnees.sort(function (a, b) {
+    return a.prix - b.prix;
+  });
+  console.log(piecesOrdonnees);
+});
+
+//Bouton filtrer prix décroissant
+const boutonTrierDecroissant = document.querySelector(".btn-trier-decroissant");
+boutonTrierDecroissant.addEventListener("click", function () {
+  const piecesOrdonnees = Array.from(pieces);
+  piecesOrdonnees.sort(function (a, b) {
+    return b.prix - a.prix;
+  });
+  console.log(piecesOrdonnees);
+});
+
+//Bouton filtrer prix non abordables
+const boutonFiltrer = document.querySelector(".btn-filtrer");
+boutonFiltrer.addEventListener("click", function () {
+  const piecesFiltrees = pieces.filter(function (piece) {
+    return piece.prix <= 35;
+  });
+  console.log(piecesFiltrees);
+});
+
+//Bouton filtrer article sans description
+const boutonPasDescription = document.querySelector(".btn-description");
+boutonPasDescription.addEventListener("click", function () {
+  const piecesFiltrees = pieces.filter(function (piece) {
+    return piece.description;
+  });
+  console.log(piecesFiltrees);
+});
