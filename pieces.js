@@ -139,6 +139,6 @@ inputPrixMax.addEventListener("input", function () {
   const piecesFiltrees = pieces.filter(function (piece) {
     return piece.prix <= inputPrixMax.value;
   });
-  document.querySelector(".fiches").innerHTML = "";
-  genererPieces(piecesFiltrees);
+  document.querySelector(".fiches").innerHTML = ""; //Permet de supprimer les éléments existants
+  genererPieces(piecesFiltrees); //Affiche les résultats des filtres
 });
