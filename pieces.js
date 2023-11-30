@@ -91,7 +91,7 @@ for (let i = pieces.length - 1; i >= 0; i--) {
   }
 }
 
-//Création de la liste
+//Création de la liste des pièces abordables
 const abordablesElements = document.createElement("ul");
 //Ajout de chaque nom à la liste
 for (let i = 0; i < noms.length; i++) {
@@ -101,3 +101,26 @@ for (let i = 0; i < noms.length; i++) {
 }
 // Ajout de l'en-tête puis de la liste au bloc résultats filtres
 document.querySelector(".abordables").appendChild(abordablesElements);
+
+//Création de 2 listes: piecesDisponibles et prixDisponible
+const piecesDisponibles = pieces.map((piece) => piece.nom);
+const prixDisponibles = pieces.map((piece) => piece.prix);
+
+//Si une pièce est indisponible, on la supprime de la liste ainsi que son prix
+for (let i = pieces.length - 1; i >= 0; i--) {
+  if (pieces[i].disponibilite === false) {
+    piecesDisponibles.splice(i, 1);
+    prixDisponibles.splice(i, 1);
+  }
+}
+
+//Création de la liste des pièces disponibles
+const disponiblesElements = document.createElement("ul");
+//Ajout de chaque nom à la liste ainsi que leur prix
+for (let i = 0; i < piecesDisponibles.length; i++) {
+  const nomElement = document.createElement("li");
+  nomElement.innerText = ` ${piecesDisponibles[i]} - ${prixDisponibles[i]}€`;
+  disponiblesElements.appendChild(nomElement);
+}
+// Ajout de l'en-tête puis de la liste au bloc résultats filtres
+document.querySelector(".disponibles").appendChild(disponiblesElements);
