@@ -29,7 +29,7 @@ function genererPieces(pieces) {
     const sectionFiches = document.querySelector(".fiches");
     // Création d’une balise dédiée à une pièce automobile
     const pieceElement = document.createElement("article");
-
+    pieceElement.dataset.id = pieces[i].id;
     // Création des balises
     const imageElement = document.createElement("img");
     imageElement.src = article.image;
@@ -96,6 +96,16 @@ boutonTrier.addEventListener("click", function () {
   genererPieces(piecesOrdonnees);
 });
 
+//Bouton filtrer prix non abordables
+const boutonFiltrer = document.querySelector(".btn-filtrer");
+boutonFiltrer.addEventListener("click", function () {
+  const piecesFiltrees = pieces.filter(function (piece) {
+    return piece.prix <= 35;
+  });
+  document.querySelector(".fiches").innerHTML = "";
+  genererPieces(piecesFiltrees);
+});
+
 //Bouton filtrer prix décroissant
 const boutonTrierDecroissant = document.querySelector(".btn-trier-decroissant");
 boutonTrierDecroissant.addEventListener("click", function () {
@@ -105,16 +115,6 @@ boutonTrierDecroissant.addEventListener("click", function () {
   });
   document.querySelector(".fiches").innerHTML = "";
   genererPieces(piecesOrdonnees);
-});
-
-//Bouton filtrer prix non abordables
-const boutonFiltrer = document.querySelector(".btn-filtrer");
-boutonFiltrer.addEventListener("click", function () {
-  const piecesFiltrees = pieces.filter(function (piece) {
-    return piece.prix <= 35;
-  });
-  document.querySelector(".fiches").innerHTML = "";
-  genererPieces(piecesFiltrees);
 });
 
 //Bouton filtrer article sans description
