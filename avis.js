@@ -79,10 +79,7 @@ export async function afficherGraphiqueAvis() {
     },
   };
   // Rendu du graphique dans l'élément canvas
-  const graphiqueAvis = new Chart(
-    document.querySelector("#graphique-avis"),
-    config
-  );
+  new Chart(document.querySelector("#graphique-avis"), config);
 
   //Calcul de la quantité de commentaires des pièces dispo et indispo
   // Récupération des pièces depuis le localStorage
